@@ -1,7 +1,9 @@
-import 'package:costOfLiving/components/transaction.dart';
 import 'package:costOfLiving/components/transactions.dart';
-import 'package:costOfLiving/transaction.dart';
+import 'package:costOfLiving/models/transaction.dart';
+import 'package:costOfLiving/screens/transaction_screen.dart';
 import 'package:flutter/material.dart';
+
+import 'components/transaction_form.dart';
 
 void main() {
   runApp(MyApp());
@@ -34,35 +36,35 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  final List<Transaction> transactions = [
-    Transaction("id1", "New shoe", 100, DateTime.now().subtract(Duration(days: 3))),
-    Transaction("id2", "Potato", 36, DateTime.now().subtract(Duration(days: 2))),
-    Transaction("id3", "Orange", 21, DateTime.now().subtract(Duration(days: 1))),
-    Transaction("id4", "Watermelon", 48, DateTime.now().subtract(Duration(hours: 22))),
-    Transaction("id5", "Beans", 78, DateTime.now().subtract(Duration(days: 21))),
-    Transaction("id6", "Apples", 32, DateTime.now().subtract(Duration(days: 20))),
-    Transaction("id7", "Banana", 50, DateTime.now().subtract(Duration(days: 19))),
-    Transaction("id8", "Onion", 12, DateTime.now().subtract(Duration(days: 19))),
-    Transaction("id9", "Tomato", 77, DateTime.now().subtract(Duration(days: 19))),
-    Transaction("id10", "Groceries", 66, DateTime.now()),
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  List<Transaction> transactions = [
+    Transaction("id1", "New shoe", 1000, DateTime.now().subtract(Duration(days: 3))),
+    Transaction("id2", "Potato", 3600, DateTime.now().subtract(Duration(days: 2))),
+    Transaction("id3", "Orange", 2100, DateTime.now().subtract(Duration(days: 1))),
+    Transaction("id4", "Watermelon", 480, DateTime.now().subtract(Duration(hours: 22))),
+    Transaction("id5", "Beans", 780, DateTime.now().subtract(Duration(days: 21))),
+    Transaction("id6", "Apples", 3200, DateTime.now().subtract(Duration(days: 20))),
+    Transaction("id7", "Banana", 500, DateTime.now().subtract(Duration(days: 19))),
+    Transaction("id8", "Onion", 1200, DateTime.now().subtract(Duration(days: 19))),
+    Transaction("id9", "Tomato", 770, DateTime.now().subtract(Duration(days: 19))),
+    Transaction("id10", "Groceries", 660, DateTime.now()),
   ];
+
   
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("cost of living")),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Card(
-            child: Text("chart")
-          ),
-          Expanded(child: Card(child: TransactionListView(transactions)))
-        ],
-      )
+      floatingActionButton: FloatingActionButton(
+        child: IconButton(icon: Icon(Icons.add), onPressed: null),
+        onPressed: null),
+      body: TransactionScreen(transactions)
     );
   }
-
-
 }

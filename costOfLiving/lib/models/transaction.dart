@@ -5,4 +5,6 @@ class Transaction {
   final DateTime date;
   
   Transaction(this.id, this.title, this.amount, this.date);
+
+  String getFormattedAmount() => '\$${(amount/100).toStringAsFixed(2)}';
 }

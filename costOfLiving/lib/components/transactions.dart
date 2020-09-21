@@ -1,5 +1,5 @@
 import 'package:costOfLiving/components/transaction.dart';
-import 'package:costOfLiving/transaction.dart';
+import 'package:costOfLiving/models/transaction.dart';
 import 'package:flutter/material.dart';
 
 class TransactionListView extends StatelessWidget {
