@@ -8,23 +8,43 @@ class TransactionView extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Row(
-        children: [
-          _buildAmountView(), 
-          _buildDescriptionView()
-        ],
-      )
+    return ListTile(
+      title: Text(
+        _transaction.title, 
+        ),
+      subtitle: Text(_transaction.date.toString()),
+      trailing: Text(
+        _transaction.amount.toString(),
+        style: TextStyle(
+          color: Colors.blue,
+          fontSize: 17,
+          fontWeight: FontWeight.bold
+        )
+      ),
     );
+    // return Container(
+    //   // decoration: BoxDecoration(
+    //   //   border: Border.all(color: Colors.black, width: 1),
+    //   // ),
+    //   // padding: EdgeInsets.all(10),
+    //   // margin: EdgeInsets.symmetric(vertical: 10),
+    //   child: Row(
+    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //     children: [
+    //       _buildDescriptionView(_transaction),
+    //       _buildAmountView(_transaction), 
+    //     ],
+    //   )
+    // );
   }
 
-  Widget _buildAmountView() => Text(_transaction.amount.toString());
+  static Widget _buildAmountView(transaction) => Text(transaction.amount.toString());
   
-  Widget _buildDescriptionView() => Column(
+  static Widget _buildDescriptionView(transaction) => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Text(_transaction.title),
-      Text(_transaction.data.toString()),
+      Text(transaction.title),
+      Text(transaction.data.toString()),
     ],
   );
 

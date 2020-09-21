@@ -36,8 +36,16 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatelessWidget {
   final List<Transaction> transactions = [
-    Transaction("id2", "New shoe", 100, DateTime.now().subtract(Duration(days: 3))),
-    Transaction("id1", "Groceries", 100, DateTime.now())
+    Transaction("id1", "New shoe", 100, DateTime.now().subtract(Duration(days: 3))),
+    Transaction("id2", "Potato", 36, DateTime.now().subtract(Duration(days: 2))),
+    Transaction("id3", "Orange", 21, DateTime.now().subtract(Duration(days: 1))),
+    Transaction("id4", "Watermelon", 48, DateTime.now().subtract(Duration(hours: 22))),
+    Transaction("id5", "Beans", 78, DateTime.now().subtract(Duration(days: 21))),
+    Transaction("id6", "Apples", 32, DateTime.now().subtract(Duration(days: 20))),
+    Transaction("id7", "Banana", 50, DateTime.now().subtract(Duration(days: 19))),
+    Transaction("id8", "Onion", 12, DateTime.now().subtract(Duration(days: 19))),
+    Transaction("id9", "Tomato", 77, DateTime.now().subtract(Duration(days: 19))),
+    Transaction("id10", "Groceries", 66, DateTime.now()),
   ];
   
   @override
@@ -50,7 +58,7 @@ class MyHomePage extends StatelessWidget {
           Card(
             child: Text("chart")
           ),
-          TransactionListView(transactions)
+          Expanded(child: Card(child: TransactionListView(transactions)))
         ],
       )
     );
