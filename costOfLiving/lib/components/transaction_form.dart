@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+// it is stateful because the form can be shown in a modal 
+// that may cause re-rendering 
 class TransactionForm extends StatefulWidget {
   final Function(String, int) _onFormSubmit;
   TransactionForm(this._onFormSubmit);

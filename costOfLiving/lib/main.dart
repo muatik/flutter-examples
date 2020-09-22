@@ -65,6 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       transactions.add(transaction);
     });
+    Navigator.of(context).pop();
   }
 
   startX() {
@@ -80,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         child: IconButton(icon: Icon(Icons.add), onPressed: null),
         onPressed: startX),
-      body: TransactionScreen(transactions)
+      body: TransactionScreen(transactions),
     );
   }
 }
