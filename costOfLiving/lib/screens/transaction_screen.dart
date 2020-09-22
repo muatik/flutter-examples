@@ -16,6 +16,10 @@ class _TransactionScreenState extends State<TransactionScreen> {
   _TransactionScreenState(this.transactions);
 
   void onFormSubmit(String title, int amount) {
+    if (title == null || amount == null) {
+      return;
+    }
+    
     final transaction = Transaction("d", title, amount, DateTime.now());
     setState(() {
       transactions.add(transaction);

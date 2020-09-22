@@ -33,6 +33,7 @@ class TransactionForm extends StatelessWidget {
           Container(
             margin: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
             child: TextFormField(
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
               decoration: InputDecoration(
                 labelText: "Amount",
                 border: OutlineInputBorder()
