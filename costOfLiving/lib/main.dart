@@ -42,7 +42,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<Transaction> transactions = [
+  final List<Transaction> transactions = [
     Transaction("id1", "New shoe", 1000, DateTime.now().subtract(Duration(days: 3))),
     Transaction("id2", "Potato", 3600, DateTime.now().subtract(Duration(days: 2))),
     Transaction("id3", "Orange", 2100, DateTime.now().subtract(Duration(days: 1))),
@@ -56,6 +56,22 @@ class _MyHomePageState extends State<MyHomePage> {
   ];
 
   
+  onFormSubmit(String title, int amount) {
+    if (title == null || amount == null) {
+      return;
+    }
+
+    final transaction = Transaction("d", title, amount, DateTime.now());
+    setState(() {
+      transactions.add(transaction);
+    });
+  }
+
+  startX() {
+    showModalBottomSheet(context: context, builder: (bx) {
+      return TransactionForm(onFormSubmit);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(title: Text("cost of living")),
       floatingActionButton: FloatingActionButton(
         child: IconButton(icon: Icon(Icons.add), onPressed: null),
-        onPressed: null),
+        onPressed: startX),
       body: TransactionScreen(transactions)
     );
   }
