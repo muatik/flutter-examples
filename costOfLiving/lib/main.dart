@@ -50,9 +50,9 @@ class _MyHomePageState extends State<MyHomePage> {
     Transaction("id5", "Beans", 780, DateTime.now().subtract(Duration(days: 21))),
     Transaction("id6", "Apples", 3200, DateTime.now().subtract(Duration(days: 20))),
     Transaction("id7", "Banana", 500, DateTime.now().subtract(Duration(days: 19))),
-    Transaction("id8", "Onion", 1200, DateTime.now().subtract(Duration(days: 19))),
-    Transaction("id9", "Tomato", 770, DateTime.now().subtract(Duration(days: 19))),
-    Transaction("id10", "Groceries", 660, DateTime.now()),
+    Transaction("id8", "Onion", 1200, DateTime.now().subtract(Duration(days: 18))),
+    Transaction("id9", "Tomato", 770, DateTime.now().subtract(Duration(days: 17))),
+    Transaction("id10", "Groceries", 1660, DateTime.now()),
   ];
 
   

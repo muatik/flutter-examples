@@ -1,3 +1,4 @@
+import 'package:costOfLiving/components/chart.dart';
 import 'package:costOfLiving/components/transactions.dart';
 import 'package:costOfLiving/models/transaction.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +13,8 @@ class TransactionScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Card(child: Text("chart")),
-        this.transactions.length != 0 ? 
+        Card(child: Chart(transactions)),
+        this.transactions.length == 0 ? 
           Center(child: Text('no transaction added yet. add')):
           Expanded(child: Card(child: TransactionListView(transactions)))
       ],
