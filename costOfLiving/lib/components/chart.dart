@@ -20,6 +20,7 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color color = Theme.of(context).primaryColorDark;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -27,27 +28,30 @@ class Chart extends StatelessWidget {
         ...List.generate(7, (index) {
           var day = DateFormat('E').format(DateTime.now().subtract(
             Duration(days: 6-index))).toString();
-          return buildContainer(day, getTotalByDay(day) / totalCost);
+          return buildChartBar(color, day, getTotalByDay(day) / totalCost);
         })
       ],
     );
   }
 
-  Widget buildContainer(String day, double percentage) {
+  Widget buildChartBar(Color color, String day, double percentage) {
     return Column(
       children: [
         Text(day),
-        Container(
-          constraints: BoxConstraints(
-            minWidth: 30,
-            minHeight: 150 * percentage
-          ),
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey),
-            color: Colors.red
-          ),
-          margin: EdgeInsets.all(4),
-        )
+        SizedBox(
+          width: 30, 
+          height: 80, 
+          child: FractionallySizedBox(
+            alignment: Alignment.bottomCenter,
+            heightFactor: percentage,
+            child: Container(
+              decoration: BoxDecoration(
+                color: color,
+                borderRadius: BorderRadius.circular(3)
+              ),
+            ),
+          )
+        ),
       ]
     );
   }

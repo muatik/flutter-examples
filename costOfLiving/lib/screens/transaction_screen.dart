@@ -13,7 +13,7 @@ class TransactionScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Card(child: Chart(transactions)),
+        Chart(transactions),
         this.transactions.length == 0 ? 
           Center(child: Text('no transaction added yet. add')):
           Expanded(child: Card(child: TransactionListView(transactions)))
