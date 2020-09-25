@@ -56,12 +56,12 @@ class _MyHomePageState extends State<MyHomePage> {
   ];
 
   
-  onFormSubmit(String title, int amount) {
+  onFormSubmit(String title, int amount, DateTime dateTime) {
     if (title == null || amount == null) {
       return;
     }
 
-    final transaction = Transaction("d", title, amount, DateTime.now());
+    final transaction = Transaction("d", title, amount, dateTime);
     setState(() {
       transactions.add(transaction);
     });
