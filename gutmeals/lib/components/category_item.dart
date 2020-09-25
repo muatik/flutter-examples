@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gutmeals/models/Category.dart';
+import 'package:gutmeals/models/category.dart';
 
 class CategoryItem extends StatelessWidget {
   final Category category;

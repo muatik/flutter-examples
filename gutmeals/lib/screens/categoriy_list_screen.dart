@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gutmeals/components/category_item.dart';
-import 'package:gutmeals/models/Category.dart';
+import 'package:gutmeals/models/category.dart';
 import 'package:gutmeals/routes.dart';
 
 class CategoryListScreen extends StatelessWidget {
