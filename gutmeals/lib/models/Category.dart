@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gutmeals/models/receipe.dart';
+import 'package:gutmeals/models/meal.dart';
 
 class Category {
   final String id;
@@ -33,14 +33,12 @@ class Category {
     return categories;
   }
 
-  static final Map<String, List<String>> category2Receipes = {
+  static final Map<String, List<String>> category2Meals = {
     '1': ['1', '4'],
     '2': ['2', '4', '3']
   };
 
-  static List<Receipe> findByCategory(String categoryId) {
-    return category2Receipes[categoryId]
-        .map((id) => Receipe.findById(id))
-        .toList();
+  static List<Meal> findMeals(String categoryId) {
+    return category2Meals[categoryId].map((id) => Meal.findById(id)).toList();
   }
 }
