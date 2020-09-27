@@ -13,8 +13,8 @@ class Meal {
       @required this.title,
       @required this.description,
       @required this.image,
-      this.tags,
-      this.ingiridients});
+      this.tags: const [],
+      this.ingiridients: const []});
 
   static final List<Meal> meals = [
     Meal(
@@ -28,9 +28,18 @@ class Meal {
         id: '2',
         title: 'Doner',
         tags: ['meat', 'hauptspeise'],
+        ingiridients: [
+          'sugar',
+          'floor',
+          'hazelnut',
+          'butter',
+          'floor2',
+          'pistachio'
+        ],
         image:
             'https://images.unsplash.com/photo-1596995804697-27d11d43652e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1235&q=80',
-        description: 'Doner is nice'),
+        description:
+            'Doner kebab is a type of kebab, made of meat cooked on a vertical rotisserie. Seasoned meat stacked in the shape of an inverted cone is turned slowly on the rotisserie, next to a vertical cooking element. The outer layer is sliced into thin shavings as it cooks. Wikipedia'),
     Meal(
         id: '3',
         title: 'Lahmacun',
