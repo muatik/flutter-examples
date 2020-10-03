@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:shopApp/models/product.dart';
+import 'package:provider/provider.dart';
+import 'package:shopApp/providers/product.dart';
 
-class ProductItem extends StatelessWidget {
-  final Product product;
-
+class ProductsGridItem extends StatelessWidget {
   final Function onTab;
 
   final onAddChart;
 
   final onFav;
 
-  ProductItem(
-      {@required this.product, this.onTab, this.onAddChart, this.onFav});
+  ProductsGridItem({this.onTab, this.onAddChart, this.onFav});
 
   @override
   Widget build(BuildContext context) {
+    Product product = Provider.of<Product>(context);
     return GestureDetector(
       onTap: onTab,
       child: GridTile(

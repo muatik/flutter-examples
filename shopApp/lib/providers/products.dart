@@ -1,20 +1,7 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:shopApp/providers/product.dart';
 
-class Product {
-  final String id;
-  final String title;
-  final String description;
-  final double price;
-  final String imageUrl;
-
-  const Product({
-    @required this.id,
-    @required this.title,
-    @required this.description,
-    @required this.price,
-    @required this.imageUrl,
-  });
-
+class Products with ChangeNotifier {
   static final List<Product> _products = [
     Product(
         id: 'id1',
@@ -81,11 +68,15 @@ class Product {
             'https://images.unsplash.com/photo-1577106436954-eb29e215beff?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80'),
   ];
 
-  static List<Product> findAll() {
+  List<Product> findAll() {
     return [..._products];
   }
 
-  static Product findById(String id) {
+  Product findById(String id) {
     return _products.firstWhere((element) => element.id == id);
+  }
+
+  void add() {
+    notifyListeners();
   }
 }
