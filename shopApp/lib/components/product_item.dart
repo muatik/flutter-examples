@@ -4,18 +4,36 @@ import 'package:shopApp/models/product.dart';
 class ProductItem extends StatelessWidget {
   final Product product;
 
-  ProductItem({@required this.product});
+  final Function onTab;
+
+  final onAddChart;
+
+  final onFav;
+
+  ProductItem(
+      {@required this.product, this.onTab, this.onAddChart, this.onFav});
 
   @override
   Widget build(BuildContext context) {
-    return GridTile(
-        child: Container(
-      decoration:
-          BoxDecoration(border: Border.all(color: Colors.red, width: 1)),
-      child: Image.network(
-        product.imageUrl,
-        fit: BoxFit.cover,
-      ),
-    ));
+    return GestureDetector(
+      onTap: onTab,
+      child: GridTile(
+          footer: GridTileBar(
+            backgroundColor: Colors.black54,
+            leading: IconButton(icon: Icon(Icons.favorite), onPressed: null),
+            trailing:
+                IconButton(icon: Icon(Icons.shopping_cart), onPressed: null),
+            title: Text(
+              product.title,
+              textAlign: TextAlign.center,
+            ),
+          ),
+          child: Container(
+            child: Image.network(
+              product.imageUrl,
+              fit: BoxFit.cover,
+            ),
+          )),
+    );
   }
 }
