@@ -28,14 +28,14 @@ class Products with ChangeNotifier {
         id: 'id4',
         title: 'Product 4',
         description: 'product 4 description',
-        price: 39,
+        price: 79,
         imageUrl:
             'https://images.unsplash.com/photo-1556774687-0e2fdd0116c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1489&q=80'),
     Product(
         id: 'id5',
         title: 'Product 5',
         description: 'product 5 description',
-        price: 39,
+        price: 71,
         imageUrl:
             'https://images.unsplash.com/photo-1545289414-1c3cb1c06238?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80'),
     Product(
@@ -49,21 +49,21 @@ class Products with ChangeNotifier {
         id: 'id7',
         title: 'Product 7',
         description: 'product 7 description',
-        price: 39,
+        price: 64,
         imageUrl:
             'https://images.unsplash.com/photo-1594100065556-1c920cd92f19?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1502&q=80'),
     Product(
         id: 'id8',
         title: 'Product 8',
         description: 'product 7 description',
-        price: 39,
+        price: 52,
         imageUrl:
             'https://images.unsplash.com/photo-1559734828-36beac6c9586?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=621&q=80'),
     Product(
         id: 'id9',
         title: 'Product 9',
         description: 'product 7 description',
-        price: 39,
+        price: 51,
         imageUrl:
             'https://images.unsplash.com/photo-1577106436954-eb29e215beff?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80'),
   ];
@@ -78,5 +78,9 @@ class Products with ChangeNotifier {
 
   void add() {
     notifyListeners();
+  }
+
+  List<Product> findFavs() {
+    return _products.where((element) => element.price > 54).toList();
   }
 }

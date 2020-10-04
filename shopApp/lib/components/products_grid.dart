@@ -7,9 +7,15 @@ import 'package:shopApp/providers/products.dart';
 import '../routes.dart';
 
 class ProductsGrid extends StatelessWidget {
+  bool onlyFavs;
+
+  ProductsGrid(this.onlyFavs);
+
   @override
   Widget build(BuildContext context) {
-    List<Product> products = Provider.of<Products>(context).findAll();
+    List<Product> products = onlyFavs
+        ? Provider.of<Products>(context).findFavs()
+        : Provider.of<Products>(context).findAll();
     return GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
