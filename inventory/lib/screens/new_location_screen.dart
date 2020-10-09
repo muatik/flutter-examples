@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:inventory/components/image_form.dart';
 import 'package:inventory/providers/inventory.dart';
 import 'package:provider/provider.dart';
 
@@ -11,6 +14,8 @@ class _NewLocationScreenState extends State<NewLocationScreen> {
   Inventory inventory;
   String path;
   bool isProcessing = false;
+
+  List<File> _imageFiles;
   final _nameTextController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
@@ -18,6 +23,12 @@ class _NewLocationScreenState extends State<NewLocationScreen> {
     final args =
         (ModalRoute.of(context).settings.arguments as Map<String, String>);
     return args != null && args.containsKey(name) ? args[name] : null;
+  }
+
+  _onImagesChange(imageFiles) {
+    setState(() {
+      _imageFiles = imageFiles;
+    });
   }
 
   _onSubmit(BuildContext context) async {
@@ -31,7 +42,7 @@ class _NewLocationScreenState extends State<NewLocationScreen> {
       setState(() {
         isProcessing = true;
       });
-      await inventory.addLocationByPath(path, name);
+      await inventory.addLocationByPath(path, name, _imageFiles);
       Navigator.of(context).pop(true);
     } catch (e) {
       _showProcessStatus(context, 'error: ' + e.toString());
@@ -47,30 +58,34 @@ class _NewLocationScreenState extends State<NewLocationScreen> {
 
   Widget _buildForm(BuildContext context) {
     return Form(
-      key: _formKey,
-      child: Column(
-        children: [
-          TextFormField(
-            controller: _nameTextController,
-            enabled: !isProcessing,
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Please enter some text';
-              }
-              return null;
-            },
+        key: _formKey,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              TextFormField(
+                controller: _nameTextController,
+                enabled: !isProcessing,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
+              ),
+              Container(
+                  margin: EdgeInsets.symmetric(vertical: 10),
+                  child: ImageForm(maxLength: 4, onChange: _onImagesChange)),
+              isProcessing
+                  ? CircularProgressIndicator()
+                  : RaisedButton(
+                      onPressed: () => isProcessing ? null : _onSubmit(context),
+                      color: Theme.of(context).primaryColor,
+                      textColor: Colors.white,
+                      child: Text('Save'),
+                    )
+            ],
           ),
-          isProcessing
-              ? CircularProgressIndicator()
-              : RaisedButton(
-                  onPressed: () => isProcessing ? null : _onSubmit(context),
-                  color: Theme.of(context).primaryColor,
-                  textColor: Colors.white,
-                  child: Text('Save'),
-                )
-        ],
-      ),
-    );
+        ));
   }
 
   @override

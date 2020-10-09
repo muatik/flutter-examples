@@ -6,7 +6,8 @@ class Entry with ChangeNotifier {
   EntryType entryType;
   String name;
   String path;
-  Entry(this.path, this.name, this.entryType);
+  List images = [];
+  Entry(this.path, this.name, this.entryType, this.images);
 
   String getPath() {
     return path == '/' ? '/$name' : '$path/$name';
@@ -16,8 +17,12 @@ class Entry with ChangeNotifier {
 class Location extends Entry {
   List<Entry> subEntries = [];
 
-  Location({@required path, @required name, @required this.subEntries})
-      : super(path, name, EntryType.Location);
+  Location(
+      {@required path,
+      @required name,
+      @required this.subEntries,
+      @required images})
+      : super(path, name, EntryType.Location, images);
 
   add(Entry entry) {
     subEntries.add(entry);
@@ -26,5 +31,6 @@ class Location extends Entry {
 }
 
 class Item extends Entry {
-  Item({@required path, @required name}) : super(path, name, EntryType.Item);
+  Item({@required path, @required name, @required images})
+      : super(path, name, EntryType.Item, images);
 }

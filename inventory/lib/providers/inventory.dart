@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'entry.dart';
 
 class Inventory with ChangeNotifier {
-  Entry root = Location(path: '/', name: 'Home', subEntries: [
+  Entry root = Location(path: '/', name: '', subEntries: [
     Location(path: '/', name: 'keller', subEntries: [
-      Location(path: '/keller', name: 'shelf1', subEntries: []),
-      Item(path: '/keller', name: 'domates')
-    ]),
-    Item(path: '/', name: 'patates')
-  ]);
+      Location(path: '/keller', name: 'shelf1', subEntries: [], images: []),
+      Item(path: '/keller', name: 'domates', images: [])
+    ], images: []),
+    Item(path: '/', name: 'patates', images: [])
+  ], images: []);
 
   Entry getByPath(String path) {
     List<String> names = path
@@ -33,14 +33,14 @@ class Inventory with ChangeNotifier {
     return pwd;
   }
 
-  Future<Location> addLocationByPath(String path, name) {
+  Future<Location> addLocationByPath(String path, String name, List images) {
     final parent = getByPath(path);
-    return addLocation(parent, name);
+    return addLocation(parent, name, images);
   }
 
-  Future<Location> addLocation(Location parent, name) {
-    final location =
-        Location(path: parent.getPath(), name: name, subEntries: []);
+  Future<Location> addLocation(Location parent, String name, List images) {
+    final location = Location(
+        path: parent.getPath(), name: name, subEntries: [], images: images);
     return Future.delayed(Duration(seconds: 3), () {
       parent.add(location);
       notifyListeners();
