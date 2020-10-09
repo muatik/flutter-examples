@@ -18,7 +18,7 @@ class LocationOverviewScreen extends StatelessWidget {
     Entry entry = inventory.getByPath(path);
 
     return Scaffold(
-      appBar: AppBar(title: Text(entry == null ? 'not found' : path)),
+      appBar: buildAppBar(entry),
       floatingActionButton: Builder(
           builder: (context) => SpeedDial(
                 children: [
@@ -35,6 +35,14 @@ class LocationOverviewScreen extends StatelessWidget {
               )),
       body: entry == null ? Text('$path not found') : InventoryGrid(entry),
     );
+  }
+
+  Widget buildAppBar(Entry entry) {
+    if (entry == null) {
+      return AppBar(title: Text('not found'));
+    }
+    final title = entry.getPath().substring(1);
+    return AppBar(title: Text(title));
   }
 
   addNewItem(BuildContext context) {}

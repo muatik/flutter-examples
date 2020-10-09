@@ -8,7 +8,7 @@ class Entry with ChangeNotifier {
   String path;
   Entry(this.path, this.name, this.entryType);
 
-  getPath() {
+  String getPath() {
     return path == '/' ? '/$name' : '$path/$name';
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'entry.dart';
 
 class Inventory with ChangeNotifier {
-  Entry root = Location(path: '/', name: '', subEntries: [
+  Entry root = Location(path: '/', name: 'Home', subEntries: [
     Location(path: '/', name: 'keller', subEntries: [
       Location(path: '/keller', name: 'shelf1', subEntries: []),
       Item(path: '/keller', name: 'domates')
