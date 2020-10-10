@@ -41,7 +41,7 @@ class Inventory with ChangeNotifier {
   Future<Location> addLocation(Location parent, String name, List images) {
     final location = Location(
         path: parent.getPath(), name: name, subEntries: [], images: images);
-    return Future.delayed(Duration(seconds: 3), () {
+    return Future.delayed(Duration(seconds: 1), () {
       parent.add(location);
       notifyListeners();
       return location;

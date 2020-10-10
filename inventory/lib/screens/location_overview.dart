@@ -1,12 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:inventory/components/inventory_grid.dart';
+import 'package:inventory/components/location_card.dart';
 import 'package:inventory/providers/entry.dart';
 import 'package:inventory/providers/inventory.dart';
 import 'package:inventory/routes.dart';
 import 'package:provider/provider.dart';
 
 class LocationOverviewScreen extends StatelessWidget {
+  buildAppBar(Entry entry) {
+    if (entry == null) {
+      return AppBar(title: Text('not found'));
+    }
+    final title = entry.getPath().substring(1);
+    return AppBar(title: Text(title));
+  }
+
+  addNewItem(BuildContext context) {}
+
+  addNewLocation(BuildContext context, String path) {
+    Navigator.of(context).pushNamed(ROUTE_NEW_LOCATION,
+        arguments: {'path': path}).then((isAdded) {
+      _showProcessStatus(context, 'a new location added');
+    });
+  }
+
+  void _showProcessStatus(BuildContext context, String message) {
+    Scaffold.of(context).showSnackBar(SnackBar(content: Text(message)));
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: is there a better way to pass this?
@@ -33,28 +55,50 @@ class LocationOverviewScreen extends StatelessWidget {
                 ],
                 child: Icon(Icons.add),
               )),
-      body: entry == null ? Text('$path not found') : InventoryGrid(entry),
+      body: entry == null
+          ? Text('$path not found')
+          : SingleChildScrollView(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                  if (!entry.isRoot)
+                    ChangeNotifierProvider<Entry>.value(
+                        value: entry,
+                        child: LocationCard(
+                          swipeImage: true,
+                        )),
+                  InventoryGrid(entry),
+                  SizedBox(height: 300)
+                ])),
     );
   }
-
-  Widget buildAppBar(Entry entry) {
-    if (entry == null) {
-      return AppBar(title: Text('not found'));
-    }
-    final title = entry.getPath().substring(1);
-    return AppBar(title: Text(title));
-  }
-
-  addNewItem(BuildContext context) {}
-
-  addNewLocation(BuildContext context, String path) {
-    Navigator.of(context).pushNamed(ROUTE_NEW_LOCATION,
-        arguments: {'path': path}).then((isAdded) {
-      _showProcessStatus(context, 'a new location added');
-    });
-  }
-
-  void _showProcessStatus(BuildContext context, String message) {
-    Scaffold.of(context).showSnackBar(SnackBar(content: Text(message)));
-  }
 }
+
+// ustomScrollView(
+//               slivers: [
+//                 SliverAppBar(
+//                   expandedHeight: 200,
+//                   pinned: true,
+//                   flexibleSpace: FlexibleSpaceBar(
+//                       title: buildAppBar(entry),
+//                       background: !entry.isRoot
+//                           ? ChangeNotifierProvider<Entry>.value(
+//                               value: entry,
+//                               child: LocationCard(
+//                                 titleVisible: false,
+//                               ))
+//                           : null),
+//                 ),
+//                 SliverList(
+//                     delegate: SliverChildListDelegate(
+//                   [
+//                     Container(
+//                       decoration: BoxDecoration(
+//                           border: Border.all(width: 1, color: Colors.blue)),
+//                       child: InventoryGrid(entry),
+//                     ),
+//                     SizedBox(height: 700)
+//                   ],
+//                 ))
+//               ],
+//             ),

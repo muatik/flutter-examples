@@ -9,6 +9,9 @@ class Entry with ChangeNotifier {
   List images = [];
   Entry(this.path, this.name, this.entryType, this.images);
 
+  get isRoot => path == '/' && name == '';
+  get isLocation => entryType == EntryType.Location;
+
   String getPath() {
     return path == '/' ? '/$name' : '$path/$name';
   }
