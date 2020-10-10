@@ -73,4 +73,19 @@ class Inventory with ChangeNotifier {
       return location;
     });
   }
+
+  Future<Location> findLocationById(String locationId) {
+    Location location = [root]
+        .expand((e) => e.subEntries)
+        .firstWhere((e) => e.id == locationId);
+    return Future.value(location);
+  }
+
+  Future<String> delete(String locationId) async {
+    final location = await findLocationById(locationId);
+    return Future.delayed(Duration(seconds: 1), () {
+      notifyListeners();
+      return locationId;
+    });
+  }
 }

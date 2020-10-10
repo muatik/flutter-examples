@@ -16,7 +16,14 @@ class LocationOverviewScreen extends StatelessWidget {
         arguments: {'path': entry.getPath(), 'mode': LocationFormMode.UPDATE});
   }
 
-  buildAppBar(BuildContext context, Entry entry) {
+  onLocationDelete(
+      BuildContext context, Inventory inventory, String locationId) async {}
+
+  buildAppBar(
+      {BuildContext context,
+      Entry entry,
+      Function onUpdateTab,
+      Function onDeleteTab}) {
     if (entry == null) {
       return AppBar(title: Text('not found'));
     }
@@ -26,11 +33,9 @@ class LocationOverviewScreen extends StatelessWidget {
       actions: [
         ActionBarMenu([
           ActionBarMenuItem(
-              label: 'Update',
-              icon: Icons.edit,
-              onSelected: () => onLocationUpdate(context, entry)),
+              label: 'Update', icon: Icons.edit, onSelected: onUpdateTab),
           ActionBarMenuItem(
-              label: 'Delete', icon: Icons.delete, onSelected: null),
+              label: 'Delete', icon: Icons.delete, onSelected: onDeleteTab)
         ])
       ],
     );
@@ -41,11 +46,11 @@ class LocationOverviewScreen extends StatelessWidget {
   addNewLocation(BuildContext context, String path) {
     Navigator.of(context).pushNamed(ROUTE_NEW_LOCATION,
         arguments: {'path': path}).then((isAdded) {
-      _showProcessStatus(context, 'a new location added');
+      _showSnackBar(context, 'a new location added');
     });
   }
 
-  void _showProcessStatus(BuildContext context, String message) {
+  void _showSnackBar(BuildContext context, String message) {
     Scaffold.of(context).showSnackBar(SnackBar(content: Text(message)));
   }
 
@@ -60,7 +65,11 @@ class LocationOverviewScreen extends StatelessWidget {
     Entry entry = inventory.getByPath(path);
 
     return Scaffold(
-      appBar: buildAppBar(context, entry),
+      appBar: buildAppBar(
+          context: context,
+          entry: entry,
+          onUpdateTab: () => onLocationUpdate(context, entry),
+          onDeleteTab: () => onLocationDelete(context, inventory, entry.id)),
       floatingActionButton: Builder(
           builder: (context) => SpeedDial(
                 children: [
