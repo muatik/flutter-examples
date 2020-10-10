@@ -1,27 +1,30 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:inventory/components/image_form.dart';
 import 'package:inventory/providers/inventory.dart';
 import 'package:provider/provider.dart';
 
-class NewLocationScreen extends StatefulWidget {
+enum LocationFormMode { NEW, UPDATE }
+
+class LocationFormScreen extends StatefulWidget {
   @override
-  _NewLocationScreenState createState() => _NewLocationScreenState();
+  _LocationFormScreenState createState() => _LocationFormScreenState();
 }
 
-class _NewLocationScreenState extends State<NewLocationScreen> {
+class _LocationFormScreenState extends State<LocationFormScreen> {
   Inventory inventory;
   String path;
   bool isProcessing = false;
 
-  List<File> _imageFiles;
-  final _nameTextController = TextEditingController();
+  LocationFormMode _mode;
+  bool _isLoaded = false;
+  String _locationId;
+  List _imageFiles = [];
+  TextEditingController _nameTextController;
   final _formKey = GlobalKey<FormState>();
 
-  String _extractArg(BuildContext context, String name) {
+  dynamic _extractArg(BuildContext context, String name) {
     final args =
-        (ModalRoute.of(context).settings.arguments as Map<String, String>);
+        (ModalRoute.of(context).settings.arguments as Map<String, dynamic>);
     return args != null && args.containsKey(name) ? args[name] : null;
   }
 
@@ -42,7 +45,12 @@ class _NewLocationScreenState extends State<NewLocationScreen> {
       setState(() {
         isProcessing = true;
       });
-      await inventory.addLocationByPath(path, name, _imageFiles);
+      if (_mode == LocationFormMode.UPDATE) {
+        print(_locationId);
+        await inventory.updateLocationByPath(_locationId, name, _imageFiles);
+      } else {
+        await inventory.addLocationByPath(path, name, _imageFiles);
+      }
       Navigator.of(context).pop(true);
     } catch (e) {
       _showProcessStatus(context, 'error: ' + e.toString());
@@ -74,7 +82,10 @@ class _NewLocationScreenState extends State<NewLocationScreen> {
               ),
               Container(
                   margin: EdgeInsets.symmetric(vertical: 10),
-                  child: ImageForm(maxLength: 4, onChange: _onImagesChange)),
+                  child: ImageForm(
+                      initialImages: _imageFiles,
+                      maxLength: 4,
+                      onChange: _onImagesChange)),
               isProcessing
                   ? CircularProgressIndicator()
                   : RaisedButton(
@@ -91,11 +102,32 @@ class _NewLocationScreenState extends State<NewLocationScreen> {
   @override
   Widget build(BuildContext context) {
     inventory = Provider.of<Inventory>(context);
+
     path = _extractArg(context, 'path');
+    _mode = _extractArg(context, 'mode');
+    print('building location form: ${path}, ${_mode}');
+    final location = inventory.getByPath(path);
+
+    // TODO: name edit box resets itself.
+    // TODO: to store id or to store entry itself?
+    if (_isLoaded == false && _mode == LocationFormMode.UPDATE) {
+      setState(() {
+        _nameTextController = new TextEditingController(text: location.name);
+        _imageFiles = location.images;
+        _isLoaded = true;
+        _locationId = location.id;
+      });
+    } else if (!_isLoaded) {
+      setState(() {
+        _nameTextController = new TextEditingController();
+      });
+    }
 
     return Scaffold(
         appBar: AppBar(
-          title: Text("New Location"),
+          title: Text(_mode == LocationFormMode.UPDATE
+              ? "Update Location"
+              : "New Location"),
         ),
         body: Builder(
             builder: (context) => Padding(

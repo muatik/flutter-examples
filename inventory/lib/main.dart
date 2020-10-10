@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:inventory/providers/inventory.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:inventory/routes.dart';
-import 'package:inventory/screens/item_screen.dart';
-import 'package:inventory/screens/location_overview.dart';
-import 'package:inventory/screens/new_location_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/locations.dart';

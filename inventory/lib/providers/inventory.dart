@@ -1,14 +1,21 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import 'entry.dart';
 
 class Inventory with ChangeNotifier {
-  Entry root = Location(path: '/', name: '', subEntries: [
-    Location(path: '/', name: 'keller', subEntries: [
-      Location(path: '/keller', name: 'shelf1', subEntries: [], images: []),
-      Item(path: '/keller', name: 'domates', images: [])
+  Location root = Location(id: 'a1', path: '/', name: '', subEntries: [
+    Location(id: 'a2', path: '/', name: 'keller', subEntries: [
+      Location(
+          id: 'a3',
+          path: '/keller',
+          name: 'shelf1',
+          subEntries: [],
+          images: []),
+      Item(id: 'a4', path: '/keller', name: 'domates', images: [])
     ], images: []),
-    Item(path: '/', name: 'patates', images: [])
+    Item(id: 'a5', path: '/', name: 'patates', images: [])
   ], images: []);
 
   Entry getByPath(String path) {
@@ -38,11 +45,30 @@ class Inventory with ChangeNotifier {
     return addLocation(parent, name, images);
   }
 
+  Future<Location> updateLocationByPath(String id, String name, List images) {
+    return updateLocation(id, name, images);
+  }
+
   Future<Location> addLocation(Location parent, String name, List images) {
     final location = Location(
-        path: parent.getPath(), name: name, subEntries: [], images: images);
+        id: Random().nextInt(10000).toString(),
+        path: parent.getPath(),
+        name: name,
+        subEntries: [],
+        images: images);
     return Future.delayed(Duration(seconds: 1), () {
       parent.add(location);
+      notifyListeners();
+      return location;
+    });
+  }
+
+  Future<Location> updateLocation(String id, String name, List images) {
+    Location location =
+        [root].expand((e) => e.subEntries).firstWhere((e) => e.id == id);
+    return Future.delayed(Duration(seconds: 1), () {
+      location.name = name;
+      location.images = images;
       notifyListeners();
       return location;
     });

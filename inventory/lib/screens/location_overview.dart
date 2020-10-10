@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:inventory/components/action_bar_menu.dart';
 import 'package:inventory/components/inventory_grid.dart';
 import 'package:inventory/components/location_card.dart';
 import 'package:inventory/providers/entry.dart';
@@ -7,13 +8,32 @@ import 'package:inventory/providers/inventory.dart';
 import 'package:inventory/routes.dart';
 import 'package:provider/provider.dart';
 
+import 'location_form_screen.dart';
+
 class LocationOverviewScreen extends StatelessWidget {
-  buildAppBar(Entry entry) {
+  onLocationUpdate(BuildContext context, Entry entry) {
+    Navigator.of(context).pushNamed(ROUTE_NEW_LOCATION,
+        arguments: {'path': entry.getPath(), 'mode': LocationFormMode.UPDATE});
+  }
+
+  buildAppBar(BuildContext context, Entry entry) {
     if (entry == null) {
       return AppBar(title: Text('not found'));
     }
     final title = entry.getPath().substring(1);
-    return AppBar(title: Text(title));
+    return AppBar(
+      title: Text(title),
+      actions: [
+        ActionBarMenu([
+          ActionBarMenuItem(
+              label: 'Update',
+              icon: Icons.edit,
+              onSelected: () => onLocationUpdate(context, entry)),
+          ActionBarMenuItem(
+              label: 'Delete', icon: Icons.delete, onSelected: null),
+        ])
+      ],
+    );
   }
 
   addNewItem(BuildContext context) {}
@@ -40,7 +60,7 @@ class LocationOverviewScreen extends StatelessWidget {
     Entry entry = inventory.getByPath(path);
 
     return Scaffold(
-      appBar: buildAppBar(entry),
+      appBar: buildAppBar(context, entry),
       floatingActionButton: Builder(
           builder: (context) => SpeedDial(
                 children: [

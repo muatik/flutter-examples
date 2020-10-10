@@ -6,24 +6,30 @@ import 'package:image_picker/image_picker.dart';
 
 class ImageForm extends StatefulWidget {
   final Function onChange;
-
   final int maxLength;
+  final List initialImages;
 
-  ImageForm({this.maxLength = 10, this.onChange});
+  ImageForm(
+      {this.maxLength = 10, this.onChange, this.initialImages = const []});
 
   @override
-  _ImageFormState createState() =>
-      _ImageFormState(onChange: this.onChange, maxLength: this.maxLength);
+  _ImageFormState createState() => _ImageFormState(
+      onChange: this.onChange,
+      maxLength: this.maxLength,
+      initialImages: this.initialImages);
 }
 
 class _ImageFormState extends State<ImageForm> {
-  List<File> _images = [];
+  List _images = [];
   final _picker = ImagePicker();
 
   Function onChange;
   int maxLength;
+  List initialImages;
 
-  _ImageFormState({@required this.onChange, @required this.maxLength});
+  _ImageFormState(
+      {@required this.onChange, @required this.maxLength, this.initialImages})
+      : _images = initialImages;
 
   Future getImage() async {
     final pickedFile = await _picker.getImage(source: ImageSource.camera);
