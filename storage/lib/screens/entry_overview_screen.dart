@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:storage/components/entry_grid_tile.dart';
 import 'package:storage/providers/inventory.dart';
 
 class EntryOverviewScreen extends StatelessWidget {
@@ -12,13 +13,16 @@ class EntryOverviewScreen extends StatelessWidget {
         title: Text("Items"),
       ),
       body: GridView.builder(
-        itemCount: entries.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, childAspectRatio: 2 / 1.3),
-        itemBuilder: (context, index) {
-          return GridTile(child: Card(child: Text(entries[index].name)));
-        },
-      ),
+          itemCount: entries.length,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 1, childAspectRatio: 1.8),
+          itemBuilder: (context, index) => ChangeNotifierProvider.value(
+              value: entries[index],
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8),
+                child: EntryGridTile(),
+              ))),
     );
   }
 }

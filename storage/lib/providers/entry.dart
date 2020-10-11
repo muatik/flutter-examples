@@ -4,8 +4,8 @@ class Entry with ChangeNotifier {
   String _id;
   String _name;
   String _description;
-  List<String> _storage;
-  List<dynamic> _photos;
+  List<String> _storage = [];
+  List<dynamic> _photos = [];
 
   Entry(
       {@required id,
@@ -22,8 +22,8 @@ class Entry with ChangeNotifier {
   get name => _name;
   get description => _description;
   get id => _id;
-  get storage => [...storage];
-  get photos => [...photos];
+  List get storage => [..._storage];
+  List get photos => [..._photos];
 
   setStorage(List storage) {
     _storage = [...storage];
