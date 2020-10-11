@@ -25,12 +25,27 @@ class Entry with ChangeNotifier {
   List get storage => [..._storage];
   List get photos => [..._photos];
 
-  setStorage(List storage) {
+  set id(val) {
+    _id = val;
+    notifyListeners();
+  }
+
+  set name(val) {
+    _name = val;
+    notifyListeners();
+  }
+
+  set description(val) {
+    _description = val;
+    notifyListeners();
+  }
+
+  set storage(List storage) {
     _storage = [...storage];
     notifyListeners();
   }
 
-  setPhotos(List photos) {
+  set photos(List photos) {
     _photos = [...photos];
     notifyListeners();
   }

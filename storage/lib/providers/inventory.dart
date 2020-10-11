@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import 'entry.dart';
@@ -31,4 +33,39 @@ class Inventory with ChangeNotifier {
   ];
 
   List<Entry> findAll() => [..._entries];
+
+  Entry findById(String entryId) {
+    return _entries.firstWhere((e) => e.id == entryId);
+  }
+
+  Future<Entry> add(
+      {String name, String description, List<String> storage, List photos}) {
+    final entry = Entry(
+        id: Random().nextInt(10000).toString(),
+        name: name,
+        description: description,
+        storage: storage,
+        photos: photos);
+    return Future.delayed(Duration(milliseconds: 1500), () {
+      _entries.add(entry);
+      notifyListeners();
+      return entry;
+    });
+  }
+
+  Future<Entry> update(
+      {String id,
+      String name,
+      String description,
+      List<String> storage,
+      List photos}) {
+    return Future.delayed(Duration(milliseconds: 1500), () {
+      final entry = findById(id);
+      entry.name = name;
+      entry.description = description;
+      entry.storage = storage;
+      entry.photos = photos;
+      return entry;
+    });
+  }
 }

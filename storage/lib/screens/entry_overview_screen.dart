@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:storage/components/entry_grid_tile.dart';
 import 'package:storage/providers/inventory.dart';
 
+import '../routes.dart';
+
 class EntryOverviewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -23,6 +25,14 @@ class EntryOverviewScreen extends StatelessWidget {
                     const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8),
                 child: EntryGridTile(),
               ))),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => onNewEntryTab(context),
+        child: Icon(Icons.add),
+      ),
     );
+  }
+
+  void onNewEntryTab(BuildContext context) {
+    Navigator.of(context).pushNamed(ROUTE_ENTRY_FORM, arguments: {});
   }
 }
