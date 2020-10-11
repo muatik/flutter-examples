@@ -65,7 +65,16 @@ class Inventory with ChangeNotifier {
       entry.description = description;
       entry.storage = storage;
       entry.photos = photos;
+      notifyListeners();
       return entry;
+    });
+  }
+
+  Future deleteById(String id) {
+    return Future.delayed(Duration(milliseconds: 1200), () {
+      _entries.removeWhere((e) => e.id == id);
+      notifyListeners();
+      return;
     });
   }
 }
