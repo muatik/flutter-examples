@@ -77,4 +77,10 @@ class Inventory with ChangeNotifier {
       return;
     });
   }
+
+  List<Entry> search(String query) {
+    return _entries
+        .where((e) => e.name.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+  }
 }

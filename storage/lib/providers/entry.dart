@@ -19,9 +19,9 @@ class Entry with ChangeNotifier {
         _storage = [...storage],
         _photos = [...photos];
 
-  get name => _name;
-  get description => _description;
-  get id => _id;
+  String get name => _name;
+  String get description => _description;
+  String get id => _id;
   List get storage => [..._storage];
   List get photos => [..._photos];
 
